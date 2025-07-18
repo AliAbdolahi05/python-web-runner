@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#editor {
+  flex: 1;
+  min-height: 60vh;
+}
+
+#controls {
+  background: #252526;
+  padding: 10px;
+  text-align: right;
+}
+
+#run-btn {
+  background: #0e639c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#run-btn:hover {
+  background: #1177bb;
+}
+
+#output {
+  background: #1e1e1e;
+  color: #9cdcfe;
+  padding: 10px;
+  height: 30vh;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  border-top: 1px solid #333;
+}
