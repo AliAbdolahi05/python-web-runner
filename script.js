@@ -1,28 +1,38 @@
-let pyodideReady = loadPyodide();
+let editor, pyodide;
 
-require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs" } });
+require.config({ paths: { vs: "https://unpkg.com/monaco-editor@0.45.0/min/vs" } });
+
 require(["vs/editor/editor.main"], function () {
-  window.editor = monaco.editor.create(document.getElementById("editor"), {
-    value: 'print("Hello from Pyodide!")',
+  editor = monaco.editor.create(document.getElementById("editor-container"), {
+    value: `print("Hello from Python!")`,
     language: "python",
     theme: "vs-dark",
-    automaticLayout: true
+    automaticLayout: true,
   });
 });
 
-document.getElementById("run-btn").addEventListener("click", async () => {
-  const pyodide = await pyodideReady;
-  const code = window.editor.getValue();
-  const outputElement = document.getElementById("output");
+async function loadPyodideAndRun() {
+  pyodide = await loadPyodide();
+  logToTerminal("✅ Pyodide آماده است.");
+}
 
-  outputElement.textContent = "Running...\n";
+function logToTerminal(message) {
+  const terminal = document.getElementById("terminal");
+  terminal.textContent += message + "\n";
+  terminal.scrollTop = terminal.scrollHeight;
+}
 
+async function runPythonCode() {
+  const code = editor.getValue();
+  logToTerminal(">>> اجرای کد ...\n" + code);
   try {
-    let result = await pyodide.runPythonAsync(code);
-    if (result !== undefined) {
-      outputElement.textContent += result + "\n";
-    }
+    const result = await pyodide.runPythonAsync(code);
+    if (result !== undefined) logToTerminal(result.toString());
   } catch (err) {
-    outputElement.textContent += err + "\n";
+    logToTerminal("⛔ خطا:\n" + err);
   }
-});
+}
+
+document.getElementById("run-button").addEventListener("click", runPythonCode);
+
+loadPyodideAndRun();
