@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Python Runner</title>
+</head>
+<body>
+    <h2>Python Online Runner (Powered by Pyodide)</h2>
+    <textarea id="code" rows="10" cols="60">print("Hello, Python in Browser!")</textarea><br>
+    <button onclick="runCode()">Run</button>
+    <pre id="output"></pre>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
