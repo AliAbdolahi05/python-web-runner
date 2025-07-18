@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Python Runner</title>
+  <meta charset="UTF-8">
+  <title>Python Web IDE</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
 </head>
 <body>
-    <h2>Python Online Runner (Powered by Pyodide)</h2>
-    <textarea id="code" rows="10" cols="60">print("Hello, Python in Browser!")</textarea><br>
-    <button onclick="runCode()">Run</button>
+  <div id="app">
+    <div id="editor"></div>
+    <div id="controls">
+      <button id="run-btn">Run ▶</button>
+    </div>
     <pre id="output"></pre>
-
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-    <script src="script.js"></script>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
