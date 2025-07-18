@@ -1,20 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>Python Web IDE</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Python Web Runner</title>
   <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      direction: rtl;
+      background-color: #f5f5f5;
+    }
+    textarea {
+      width: 100%;
+      font-family: monospace;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+    pre {
+      background: #222;
+      color: #0f0;
+      padding: 1rem;
+      white-space: pre-wrap;
+      min-height: 100px;
+    }
+  </style>
 </head>
 <body>
-  <div id="app">
-    <div id="editor"></div>
-    <div id="controls">
-      <button id="run-btn">Run ▶</button>
-    </div>
-    <pre id="output"></pre>
-  </div>
-  <script src="script.js"></script>
+
+  <h2>اجرای پایتون در مرورگر ✨</h2>
+  
+  <textarea id="code" rows="8">print("سلام از پایتون!")</textarea>
+  <br />
+  <button onclick="runPythonCode()">اجرا کن</button>
+  
+  <h3>خروجی:</h3>
+  <pre id="output">...</pre>
+
+  <script>
+    let pyodide = null;
+
+    async function startPyodide() {
+      pyodide = await loadPyodide();
+      console.log("✅ Pyodide لود شد");
+      document.getElementById("output").innerText = "✅ آماده برای اجرای کد پایتون";
+    }
+
+    async function runPythonCode() {
+      const code = document.getElementById("code").value;
+      if (!pyodide) {
+        document.getElementById("output").innerText = "⏳ منتظر بارگذاری Pyodide باشید...";
+        return;
+      }
+      try {
+        let result = await pyodide.runPythonAsync(code);
+        document.getElementById("output").innerText = result ?? "(کدی بدون خروجی اجرا شد)";
+      } catch (err) {
+        document.getElementById("output").innerText = "خطا:\n" + err;
+      }
+    }
+
+    startPyodide();
+  </script>
+
 </body>
 </html>
