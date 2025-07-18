@@ -2,70 +2,110 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Python Web Runner</title>
+  <title>Python Terminal Runner</title>
   <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
   <style>
     body {
-      font-family: sans-serif;
-      padding: 2rem;
-      direction: rtl;
-      background-color: #f5f5f5;
+      margin: 0;
+      background-color: #121212;
+      color: #ffffff;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
-    textarea {
-      width: 100%;
+
+    header {
+      padding: 1rem;
+      background-color: #1e1e1e;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    #terminal {
+      flex: 1;
+      background-color: #000000;
+      color: #00ff00;
+      padding: 1rem;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    #input-area {
+      display: flex;
+      background-color: #1e1e1e;
+      padding: 0.5rem;
+    }
+
+    #code-input {
+      flex: 1;
+      background: #000;
+      color: #0f0;
+      border: none;
+      padding: 0.5rem;
       font-family: monospace;
       font-size: 1rem;
+      resize: none;
     }
+
     button {
-      margin-top: 1rem;
+      margin-left: 0.5rem;
+      background: #333;
+      color: white;
+      border: none;
       padding: 0.5rem 1rem;
-      font-size: 1rem;
+      cursor: pointer;
     }
-    pre {
-      background: #222;
-      color: #0f0;
-      padding: 1rem;
-      white-space: pre-wrap;
-      min-height: 100px;
+
+    button:hover {
+      background: #555;
     }
   </style>
 </head>
 <body>
 
-  <h2>اجرای پایتون در مرورگر ✨</h2>
-  
-  <textarea id="code" rows="8">print("سلام از پایتون!")</textarea>
-  <br />
-  <button onclick="runPythonCode()">اجرا کن</button>
-  
-  <h3>خروجی:</h3>
-  <pre id="output">...</pre>
+  <header>💻 اجرای پایتون در مرورگر با Pyodide</header>
+
+  <div id="terminal">✅ آماده برای اجرای کد پایتون</div>
+
+  <div id="input-area">
+    <textarea id="code-input" rows="3" placeholder="کد پایتون خود را بنویسید...">print("سلام دنیا")</textarea>
+    <button onclick="runPython()">اجرا</button>
+  </div>
 
   <script>
     let pyodide = null;
 
-    async function startPyodide() {
+    async function loadPyodideEngine() {
       pyodide = await loadPyodide();
-      console.log("✅ Pyodide لود شد");
-      document.getElementById("output").innerText = "✅ آماده برای اجرای کد پایتون";
+      logToTerminal("🔹 Pyodide لود شد!");
     }
 
-    async function runPythonCode() {
-      const code = document.getElementById("code").value;
+    function logToTerminal(text) {
+      const terminal = document.getElementById("terminal");
+      terminal.innerText += "\n" + text;
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    async function runPython() {
+      const code = document.getElementById("code-input").value;
       if (!pyodide) {
-        document.getElementById("output").innerText = "⏳ منتظر بارگذاری Pyodide باشید...";
+        logToTerminal("⏳ Pyodide هنوز لود نشده...");
         return;
       }
+      logToTerminal(">>> " + code);
       try {
-        let result = await pyodide.runPythonAsync(code);
-        document.getElementById("output").innerText = result ?? "(کدی بدون خروجی اجرا شد)";
+        const result = await pyodide.runPythonAsync(code);
+        if (result !== undefined) {
+          logToTerminal(result.toString());
+        }
       } catch (err) {
-        document.getElementById("output").innerText = "خطا:\n" + err;
+        logToTerminal("⛔ خطا:\n" + err);
       }
     }
 
-    startPyodide();
+    loadPyodideEngine();
   </script>
 
 </body>
