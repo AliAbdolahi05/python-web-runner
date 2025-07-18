@@ -1,48 +1,39 @@
 body {
   margin: 0;
-  background: #1e1e1e;
-  color: #d4d4d4;
+  background-color: #1e1e1e;
+  color: #fff;
   font-family: monospace;
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-#editor {
+#editor-container {
   flex: 1;
-  min-height: 60vh;
+  height: 60%;
+  border-bottom: 2px solid #333;
 }
 
-#controls {
-  background: #252526;
-  padding: 10px;
-  text-align: right;
+#terminal {
+  background: #000;
+  color: #0f0;
+  padding: 1rem;
+  overflow-y: auto;
+  height: 30%;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
 }
 
-#run-btn {
-  background: #0e639c;
+#run-button {
+  background: #007acc;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 0.75rem;
+  font-size: 1rem;
   cursor: pointer;
+  border-top: 2px solid #333;
 }
 
-#run-btn:hover {
-  background: #1177bb;
-}
-
-#output {
-  background: #1e1e1e;
-  color: #9cdcfe;
-  padding: 10px;
-  height: 30vh;
-  overflow-y: auto;
-  white-space: pre-wrap;
-  border-top: 1px solid #333;
+#run-button:hover {
+  background: #005a9e;
 }
