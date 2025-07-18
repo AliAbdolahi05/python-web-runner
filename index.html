@@ -2,111 +2,16 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8" />
-  <title>Python Terminal Runner</title>
+  <title>Python Web Runner</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-  <style>
-    body {
-      margin: 0;
-      background-color: #121212;
-      color: #ffffff;
-      font-family: monospace;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    header {
-      padding: 1rem;
-      background-color: #1e1e1e;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    #terminal {
-      flex: 1;
-      background-color: #000000;
-      color: #00ff00;
-      padding: 1rem;
-      overflow-y: auto;
-      white-space: pre-wrap;
-    }
-
-    #input-area {
-      display: flex;
-      background-color: #1e1e1e;
-      padding: 0.5rem;
-    }
-
-    #code-input {
-      flex: 1;
-      background: #000;
-      color: #0f0;
-      border: none;
-      padding: 0.5rem;
-      font-family: monospace;
-      font-size: 1rem;
-      resize: none;
-    }
-
-    button {
-      margin-left: 0.5rem;
-      background: #333;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #555;
-    }
-  </style>
+  <script src="https://unpkg.com/monaco-editor@0.45.0/min/vs/loader.js"></script>
 </head>
 <body>
+  <div id="editor-container"></div>
+  <div id="terminal"></div>
+  <button id="run-button">▶️ اجرای کد پایتون</button>
 
-  <header>💻 اجرای پایتون در مرورگر با Pyodide</header>
-
-  <div id="terminal">✅ آماده برای اجرای کد پایتون</div>
-
-  <div id="input-area">
-    <textarea id="code-input" rows="3" placeholder="کد پایتون خود را بنویسید...">print("سلام دنیا")</textarea>
-    <button onclick="runPython()">اجرا</button>
-  </div>
-
-  <script>
-    let pyodide = null;
-
-    async function loadPyodideEngine() {
-      pyodide = await loadPyodide();
-      logToTerminal("🔹 Pyodide لود شد!");
-    }
-
-    function logToTerminal(text) {
-      const terminal = document.getElementById("terminal");
-      terminal.innerText += "\n" + text;
-      terminal.scrollTop = terminal.scrollHeight;
-    }
-
-    async function runPython() {
-      const code = document.getElementById("code-input").value;
-      if (!pyodide) {
-        logToTerminal("⏳ Pyodide هنوز لود نشده...");
-        return;
-      }
-      logToTerminal(">>> " + code);
-      try {
-        const result = await pyodide.runPythonAsync(code);
-        if (result !== undefined) {
-          logToTerminal(result.toString());
-        }
-      } catch (err) {
-        logToTerminal("⛔ خطا:\n" + err);
-      }
-    }
-
-    loadPyodideEngine();
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
