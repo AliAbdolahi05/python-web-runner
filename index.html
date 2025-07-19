@@ -1,17 +1,63 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Python Web Runner</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-  <script src="https://unpkg.com/monaco-editor@0.45.0/min/vs/loader.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDE-Web | Enhanced Code Editor</title>
+    <!-- TailwindCSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/theme/solarized.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div id="editor-container"></div>
-  <div id="terminal"></div>
-  <button id="run-button">▶️ اجرای کد پایتون</button>
-
-  <script src="script.js"></script>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+    <header class="bg-blue-600 dark:bg-blue-800 text-white p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">IDE-Web</h1>
+        <div>
+            <select id="theme-select" class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-2 rounded">
+                <option value="default">Default Theme</option>
+                <option value="dracula">Dracula</option>
+                <option value="solarized light">Solarized Light</option>
+            </select>
+        </div>
+    </header>
+    <main class="flex-grow flex flex-col md:flex-row p-4 gap-4">
+        <div class="w-full md:w-1/2 flex flex-col">
+            <div class="flex justify-between mb-2">
+                <select id="language-select" class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 p-2 rounded">
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                    <option value="php">PHP</option>
+                    <option value="htmlmixed">HTML</option>
+                </select>
+                <div>
+                    <button id="run-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mr-2">Run Code</button>
+                    <button id="download-btn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Download</button>
+                </div>
+            </div>
+            <textarea id="code" class="w-full h-full border rounded"></textarea>
+        </div>
+        <div class="w-full md:w-1/2 flex flex-col">
+            <h2 class="text-lg font-semibold mb-2">Output</h2>
+            <iframe id="preview" class="w-full h-1/2 border rounded mb-2 hidden"></iframe>
+            <pre id="output" class="w-full h-1/2 bg-gray-200 dark:bg-gray-800 p-4 rounded overflow-auto"></pre>
+        </div>
+    </main>
+    <!-- CodeMirror JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.7/addon/hint/javascript-hint.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
 </body>
 </html>
