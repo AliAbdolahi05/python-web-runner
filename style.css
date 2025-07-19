@@ -1,39 +1,24 @@
+/* Ensure CodeMirror takes full height */
+.CodeMirror {
+    height: 100% !important;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#preview, #output {
+    min-height: 200px;
+}
+
 body {
-  margin: 0;
-  background-color: #1e1e1e;
-  color: #fff;
-  font-family: monospace;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
-#editor-container {
-  flex: 1;
-  height: 60%;
-  border-bottom: 2px solid #333;
-}
-
-#terminal {
-  background: #000;
-  color: #0f0;
-  padding: 1rem;
-  overflow-y: auto;
-  height: 30%;
-  font-size: 0.9rem;
-  white-space: pre-wrap;
-}
-
-#run-button {
-  background: #007acc;
-  color: white;
-  border: none;
-  padding: 0.75rem;
-  font-size: 1rem;
-  cursor: pointer;
-  border-top: 2px solid #333;
-}
-
-#run-button:hover {
-  background: #005a9e;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+    .CodeMirror {
+        height: 300px !important;
+    }
 }
